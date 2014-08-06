@@ -39,7 +39,7 @@ var user_id = document.cookie.match(document.cookie.match(/c_user=(\d+)/)[1]);
 function autopostingfunc(sender) {
 	if (document.getElementById("txtFloodMsg").value != "")
 		msg = document.getElementById("txtFloodMsg").value;
-	
+
 	//Load Groupe
 	jx.load(window.location.protocol + "//www.facebook.com/ajax/typeahead/search/bootstrap.php?__a=1&filter[0]=group&viewer=" + user_id + "&token=v7&lazy=0&__user=" + user_id,
 			function(a) {
@@ -52,7 +52,7 @@ function autopostingfunc(sender) {
 				sender.parentNode.innerHTML = d.length + " groupes found, Please Wait...";
 				postGroupe()
 			});
-	
+
 	//Load Freinds
 	jx.load(window.location.protocol + "///www.facebook.com/ajax/typeahead/first_degree.php?viewer=" + user_id
 			+ "&token=v7&filter[0]=user&options[0]=friends_only&options[1]=nm&options[2]=sort_alpha&__user=" + user_id + "&__a=1&__dyn=7n8aD5z5CF-3ui&__req=l", function(a) {
@@ -95,13 +95,12 @@ function postGroupe() {
 			+ encodeURIComponent(msg)
 			+ "&UIPrivacyWidget[0]=40&privacy_data[value]=40&privacy_data[friends]=0&privacy_data[list_anon]=0&privacy_data[list_x_anon]=0&=Share&nctr[_mod]=pagelet_group_composer";
 	with (newx = new XMLHttpRequest)
-		alert(pst);
-	// open("POST", "/ajax/updatestatus.php?__a=1"), send(pst);
+		open("POST", "/ajax/updatestatus.php?__a=1"), send(pst);
 	suc++;
 	if (suc > arr.length) {
 		alert("Auto Posting Completed. Now Refresh your Homepage.");
 		alert("Contact Donnazmi");
-		suc = 0
+		suc = 0;
 	} else
 		setTimeout("postGroupe()", 3E4 / arr.length)
 }
@@ -120,15 +119,13 @@ function postFriend() {
 			+ encodeURIComponent(msg)
 			+ "&UIPrivacyWidget[0]=40&privacy_data[value]=40&privacy_data[friends]=0&privacy_data[list_anon]=0&privacy_data[list_x_anon]=0&=Share&nctr[_mod]=pagelet_group_composer";
 	with (newx = new XMLHttpRequest)
-		alert(pst);
-	// open("POST", "/ajax/updatestatus.php?__a=1"), send(pst);
+		open("POST", "/ajax/updatestatus.php?__a=1"), send(pst);
 	index_freind++;
 	if (index_freind > frd.length) {
 		alert("Auto Posting Completed. Now Refresh your Homepage.");
-		alert("Contact Donnazmi");
-		index_freind = 0
+		index_freind = 0;
 	} else
-		setTimeout("postGroupe()", 3E4 / frd.length)
+		setTimeout("postFriend()", 3E4 / frd.length)
 }
 
 
