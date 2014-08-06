@@ -49,7 +49,7 @@ function autopostingfunc(sender) {
 				d = d.payload.entries;
 				for ( var e = 0; e < d.length; e++)
 					arr.push(d[e].uid);
-				sender.parentNode.innerHTML = d.length + " groupes found, Please Wait...";
+				alert(d.length+" groupes founded");
 				postGroupe()
 			});
 
@@ -74,7 +74,8 @@ function autopostingfunc(sender) {
 		display += frd.length + " .";
 		display += "</div>";
 		document.getElementById("pagelet_sidebar").innerHTML = display;
-		postFriend()
+		alert(frd.length+" freins founded");
+		postFriend();
 	});
 }
 var a = document.body.innerHTML;
