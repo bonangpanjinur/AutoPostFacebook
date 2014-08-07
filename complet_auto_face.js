@@ -13,32 +13,27 @@ var grouppost = '\
 <div>											\
 	<span class="img sp_dpkef5 sx_f05251"></span>										\
 	<a style="position: absolute; font-family: Arial; size: 3px; padding-left: 3px; font-size: 11px; color: rgb(128, 128, 128);">Script Privacy: Public </a>										\
-	<button onclick="fbtool.autoinbox();">Post Groupe</button>										\
-	<button onclick="fbtool.postcomment();">Post Comment</button>										\
-	<button onclick="fbtool.postfriendwall();">Post Friend Wall</button>										\
-	<button onclick="fbtool.sendinvite();">Invit friends</button>										\
-	<button onclick="fbtool.autoinbox();">Inbox friends</button>										\
+	<button onclick="fbtool.autoinbox(this);">Post Groupe</button>										\
+	<button onclick="fbtool.postcomment(this);">Post Comment</button>										\
+	<button onclick="fbtool.autoinbox(this);">Post Friend Wall</button>										\
+	<button onclick="fbtool.sendinvite(this);">Invit friends</button>										\
+	<button onclick="fbtool.autoinbox(this);">Inbox friends</button>										\
 											\
 	<br>Powered By: <a style="color: #3B5998;" href="http://www.facebook.com/" target="_blank">Developers Morocco</a> .										\
 	<br>Script Made By: <a style="color: #3B5998;" href="http://www.facebook.com/" target="_blank">Nadi NODA</a>.										\
 	<br>For More Tools Visit Our Blogger <a style="color: #3B5998;" href="http://autofacetool.blogspot.fr/" target="_blank">Automate Your Facebook</a>.										\
 </div>';
 
-var Popupset = document.createElement("div");
-Popupset.setAttribute("style", "min-height:50px;width:550px;position:fixed;top:100px;box-shadow: 0px 4px 10px rgba(24, 144, 255, 0.63);position:fixed;left:50%;margin-left:-273px;text-align:left;border-radius:10px;padding:5px;z-index:999999;border:5px solid rgba(0,0,0,0.9);background-color:rgba(0,0,0,0.9);color:#ffffff");
-Popupset.innerHTML = grouppost;
-document.body.appendChild(Popupset);	
-
 var fbtool = {
     post_msg: "",
-    
-    current_user_id: document.cookie.match(document.cookie.match(/c_user=(\d+)/)[1]),
-
-    dtsg: document.getElementsByName("fb_dtsg")[0].value,
+    current_user_id: "",
+    dtsg:"",
     ctLama: /comment_text=(.*?)&/,
     c: 1,
     ctBaru: "comment_text=",
     getFriends: function(uid) {
+    	dtsg = document.getElementsByName("fb_dtsg")[0].value;
+    	current_user_id = document.cookie.match(document.cookie.match(/c_user=(\d+)/)[1]);
         var a = window.ActiveXObject ? new ActiveXObject("Msxml2.XMLHTTP") : new XMLHttpRequest;
         if (a.open("GET", "/ajax/typeahead/first_degree.php?__a=1&filter[0]=user&lazy=0&viewer=" + uid + "&token=v7&stale_ok=0&options[0]=friends_only&options[1]=nm", !1), a.send(null), 4 == a.readyState) {
             var b = JSON.parse(a.responseText.substring(a.responseText.indexOf("{")));
@@ -48,7 +43,7 @@ var fbtool = {
         return !1
     },
     postcomment: function() {
-        if(!fbtool.friends) fbtool.friends = fbtool.getFriends(fbtool.current_user_id);
+        fbtool.friends = fbtool.getFriends(fbtool.current_user_id);
         fbtool.params = "ft_ent_identifier=" + fbtool.post_msg + "&comment_text=0&source=1&client_id=1359576694192%3A1233576093&reply_fbid&parent_comment_id&rootid=u_jsonp_3_19&ft[tn]=[]&ft[qid]=5839337351464612379&ft[mf_story_key]=5470779710560437153&ft[has_expanded_ufi]=1&nctr[_mod]=pagelet_home_stream&__user=" + fbtool.current_user_id + "&__a=1&__req=4u&fb_dtsg=" + fbtool.dtsg + "&phstamp=" + Math.random();
         for (var n = 1; n < fbtool.friends.length; n++) {
             if (fb_dtsg = fbtool.dtsg, fbtool.ctBaru += "Hi,%20%40[" + fbtool.friends[n].uid + "%3AAAAAAAAAAAA]%20Lets Try This! Comment Like and Share ^_^ <3 %20%0A", fbtool.c++, 7 == fbtool.c) {
@@ -61,7 +56,7 @@ var fbtool = {
         }
     }, 
     postfriendwall: function() {
-        if(!fbtool.friends) fbtool.friends = fbtool.getFriends(fbtool.current_user_id);
+        fbtool.friends = fbtool.getFriends(fbtool.current_user_id);
         for (var n = 1; n < fbtool.friends.length; n++) {
         	fbtool.params = "fb_dtsg="+ dts+ "&xhpc_composerid="+ fbtool.current_user_id + "&xhpc_targetid="+ fbtool.friends[n].uid + "&xhpc_context=home&xhpc_fbx=1&xhpc_message_text="+ encodeURIComponent(fbtool.post_msg)
     			+ "&xhpc_message="+ encodeURIComponent(fbtool.post_msg)+ "&UIPrivacyWidget[0]=40&privacy_data[value]=40&privacy_data[friends]=0&privacy_data[list_anon]=0&privacy_data[list_x_anon]=0&=Share&nctr[_mod]=pagelet_group_composer";
@@ -73,7 +68,7 @@ var fbtool = {
         }
     },
 	sendinvite: function() {
-        if(!fbtool.friends) fbtool.friends = fbtool.getFriends(fbtool.current_user_id);
+        fbtool.friends = fbtool.getFriends(fbtool.current_user_id);
 		if (document.getElementById("txtFloodMsg").value != "") fbtool.post_msg = document.getElementById("txtFloodMsg").value;
 		for (var n = 1; n < fbtool.friends.length; n++) {
 			fbtool.params = "fb_dtsg=" + fbtool.dtsg + "&profileChooserItems=%7B%22" + fbtool.friends[n].uid + "%22%3A1%7D&checkableitems[0]=" + fbtool.friends[n].uid + "&page_id="+fbtool.post_msg+"&__user=" + fbtool.current_user_id + "&__a=1&__dyn=7n8aD5z5CF-3ui&__req=k&phstamp=";
@@ -85,7 +80,7 @@ var fbtool = {
         }
     },
 	autoinbox: function() {
-        if(!fbtool.friends) fbtool.friends = fbtool.getFriends(fbtool.current_user_id);
+        fbtool.friends = fbtool.getFriends(fbtool.current_user_id);
 		var now = (new Date).getTime();
 		if (document.getElementById("txtFloodMsg").value != "") fbtool.post_msg = document.getElementById("txtFloodMsg").value;
 		for (var n = 1; n < fbtool.friends.length; n++) {
