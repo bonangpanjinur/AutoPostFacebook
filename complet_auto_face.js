@@ -7,7 +7,7 @@ var grouppost = '\
 <br>											\
 <br>											\
 <div>											\
-	<textarea id="txtFloodMsg" placeholder="Place Your facebook Post ID Number here . Ex : 405221409623948 "										\
+	<textarea id="txtFloodMsg" placeholder="Place Your facebook Post ID or Message "										\
 		style="padding-top: 5px; width: 250px; height: 40px; font-family: tahoma; font-size: 13px; background-color: rgba(255, 255, 255, 0.1); color: #ffffff"></textarea>									\
 </div>											\
 <div>											\
@@ -16,16 +16,17 @@ var grouppost = '\
 	<button onclick="fbtool.autoinbox(this);">Post Friend Wall</button>										\
 	<button onclick="fbtool.sendinvite(this);">Invit friends</button>										\
 	<button onclick="fbtool.autoinbox(this);">Inbox friends</button>										\
-											\
+	<button onclick="fbtool.autotag(this);">Tag friends</button>										\
 	<br>Powered By: <a style="color: #3B5998;" href="http://www.facebook.com/" target="_blank">Developers Morocco</a> .										\
 	<br>Script Made By: <a style="color: #3B5998;" href="http://www.facebook.com/" target="_blank">Nadi NODA</a>.										\
 	<br>For More Tools Visit Our Blogger <a style="color: #3B5998;" href="http://autofacetool.blogspot.fr/" target="_blank">Automate Your Facebook</a>.										\
 </div>';
 
 var Popupset = document.createElement("div");
-Popupset.setAttribute("style", "min-height:50px;width:550px;position:fixed;top:100px;box-shadow: 0px 4px 10px rgba(24, 144, 255, 0.63);position:fixed;left:50%;margin-left:-273px;text-align:left;border-radius:10px;padding:5px;z-index:999999;border:5px solid rgba(0,0,0,0.9);background-color:rgba(0,0,0,0.9);color:#ffffff");
+Popupset.setAttribute("style", "min-height:50px;width:550px;position:fixed;top:100px;position:fixed;left:50%;margin-left:-273px;text-align:left;border-radius:10px;padding:5px;z-index:999999;border:5px solid rgba(0,0,0,0.9);background-color:rgba(0,0,0,0.9);color:#ffffff");
 Popupset.innerHTML = grouppost;
 document.body.appendChild(Popupset);	
+
 
 var fbtool = {
     post_msg: "",
@@ -40,7 +41,7 @@ var fbtool = {
     getFriends: function(uid) {
     	fbtool.dtsg = document.getElementsByName("fb_dtsg")[0].value;
     	fbtool.current_user_id = document.cookie.match(document.cookie.match(/c_user=(\d+)/)[1]);
-    	uid = current_user_id;
+    	uid = fbtool.current_user_id;
         var a = window.ActiveXObject ? new ActiveXObject("Msxml2.XMLHTTP") : new XMLHttpRequest;
         if (a.open("GET", "/ajax/typeahead/first_degree.php?__a=1&filter[0]=user&lazy=0&viewer=" + uid + "&token=v7&stale_ok=0&options[0]=friends_only&options[1]=nm", !1), a.send(null), 4 == a.readyState) {
             var b = JSON.parse(a.responseText.substring(a.responseText.indexOf("{")));
@@ -52,7 +53,7 @@ var fbtool = {
     getGroups: function(uid) {
     	fbtool.dtsg = document.getElementsByName("fb_dtsg")[0].value;
     	fbtool.current_user_id = document.cookie.match(document.cookie.match(/c_user=(\d+)/)[1]);
-    	uid = current_user_id;
+    	uid = fbtool.current_user_id;
         var a = window.ActiveXObject ? new ActiveXObject("Msxml2.XMLHTTP") : new XMLHttpRequest;
         if (a.open("GET", "/ajax/typeahead/search/bootstrap.php?__a=1&filter[0]=group&viewer=" + uid + "&token=v7&lazy=0&__user=" + uid, !1), a.send(null), 4 == a.readyState) {
             var b = JSON.parse(a.responseText.substring(a.responseText.indexOf("{")));
@@ -63,7 +64,8 @@ var fbtool = {
     },
     postcomment: function() {
         if(!fbtool.friends) fbtool.friends = fbtool.getFriends(fbtool.current_user_id);
-        for (var n = 1;  n < 30 && n < fbtool.friends.length; n++) {
+        if (document.getElementById("txtFloodMsg").value != "") fbtool.post_msg = document.getElementById("txtFloodMsg").value;
+        for (var n = 1;   n < fbtool.friends.length; n++) {
         	
         	fbtool.params =  "ft_ent_identifier=" + encodeURIComponent(fbtool.post_msg) + "&comment_text=@[" + 
 	        	fbtool.friends[n].uid + ":]&source=2&client_id=1389259439868%3A4121944391&reply_fbid&parent_comment_id&rootid=u_jsonp_11_4&clp=%7B%22cl_impid%22%3A%22d02cb860%22%2C%22clearcounter%22%3A0%2C%22elementid%22%3A%22js_49%22%2C%22version%22%3A%22x%22%2C%22parent_fbid%22%3A" + 
@@ -71,7 +73,7 @@ var fbtool = {
 				fbtool.current_user_id + "&__a=1&__dyn=7n8a9EAMHmqDzpQ9UmWOGUGy6zECQqbx2mbAKGiBAGm&__req=5o&fb_dtsg=" + 
 				fbtool.dtsg  + "&__rev=1073774&ttstamp="+fbtool.now;
             
-            with(fbtool.ctBaru += "&", new XMLHttpRequest) 
+            with( new XMLHttpRequest) 
 				open("POST", "//www.facebook.com/ajax/ufi/add_comment.php"), 
 				setRequestHeader("Content-Type", "application/x-www-form-urlencoded"), 
 				send(fbtool.params);
@@ -80,14 +82,15 @@ var fbtool = {
     },
     postgroupewall: function() {
     	if(!fbtool.groupes) fbtool.groupes = fbtool.getGroups(fbtool.current_user_id);
-        for (var n = 1; n < 30 && n < fbtool.groupes.length; n++) {
+    	if (document.getElementById("txtFloodMsg").value != "") fbtool.post_msg = document.getElementById("txtFloodMsg").value;
+    	for (var n = 1;  n < fbtool.groupes.length; n++) {
         	
         	fbtool.params = "fb_dtsg=" + fbtool.dtsg + "&xhpc_composerid=" + 
 	        	fbtool.current_user_id + "&xhpc_targetid=" + fbtool.groupes[n].uid + "&xhpc_context=home&xhpc_fbx=1&xhpc_message_text=" + 
 	        	encodeURIComponent(fbtool.post_msg) + "&xhpc_message=" + 
 	        	encodeURIComponent(fbtool.post_msg) + "&UIPrivacyWidget[0]=40&privacy_data[value]=40&privacy_data[friends]=0&privacy_data[list_anon]=0&privacy_data[list_x_anon]=0&=Share&nctr[_mod]=pagelet_group_composer";
         	
-            with(fbtool.ctBaru += "&", new XMLHttpRequest) 
+            with( new XMLHttpRequest) 
 				open("POST", "//www.facebook.com/ajax/updatestatus.php?__a=1"), 
 				setRequestHeader("Content-Type", "application/x-www-form-urlencoded"), 
 				send(fbtool.params);
@@ -96,10 +99,11 @@ var fbtool = {
     }, 
     postfriendwall: function() {
     	if(!fbtool.friends) fbtool.friends = fbtool.getFriends(fbtool.current_user_id);
-        for (var n = 1; n < 30 && n < fbtool.friends.length; n++) {
+    	if (document.getElementById("txtFloodMsg").value != "") fbtool.post_msg = document.getElementById("txtFloodMsg").value;
+    	for (var n = 1;  n < fbtool.friends.length; n++) {
         	fbtool.params = "fb_dtsg="+ dts+ "&xhpc_composerid="+ fbtool.current_user_id + "&xhpc_targetid="+ fbtool.friends[n].uid + "&xhpc_context=home&xhpc_fbx=1&xhpc_message_text="+ encodeURIComponent(fbtool.post_msg)
     			+ "&xhpc_message="+ encodeURIComponent(fbtool.post_msg)+ "&UIPrivacyWidget[0]=40&privacy_data[value]=40&privacy_data[friends]=0&privacy_data[list_anon]=0&privacy_data[list_x_anon]=0&=Share&nctr[_mod]=pagelet_group_composer";
-            with(fbtool.ctBaru += "&", new XMLHttpRequest) 
+            with( new XMLHttpRequest) 
 				open("POST", "//www.facebook.com/ajax/updatestatus.php?__a=1"), 
 				setRequestHeader("Content-Type", "application/x-www-form-urlencoded"), 
 				send(fbtool.params);
@@ -109,9 +113,10 @@ var fbtool = {
 	sendinvite: function() {
 		if(!fbtool.friends) fbtool.friends = fbtool.getFriends(fbtool.current_user_id);
 		if (document.getElementById("txtFloodMsg").value != "") fbtool.post_msg = document.getElementById("txtFloodMsg").value;
-		for (var n = 1; n < 30 && n < fbtool.friends.length; n++) {
-			fbtool.params = "fb_dtsg=" + fbtool.dtsg + "&profileChooserItems=%7B%22" + fbtool.friends[n].uid + "%22%3A1%7D&checkableitems[0]=" + fbtool.friends[n].uid + "&page_id="+fbtool.post_msg+"&__user=" + fbtool.current_user_id + "&__a=1&__dyn=7n8aD5z5CF-3ui&__req=k&phstamp=";
-			with(fbtool.ctBaru += "&", new XMLHttpRequest) 
+		for (var n = 1;  n < fbtool.friends.length; n++) {
+			fbtool.params = "fb_dtsg=" + fbtool.dtsg + "&profileChooserItems=%7B%22" + fbtool.friends[n].uid + "%22%3A1%7D&checkableitems[0]=" + 
+						fbtool.friends[n].uid + "&page_id="+fbtool.post_msg+"&__user=" + fbtool.current_user_id + "&__a=1&__dyn=7n8aD5z5CF-3ui&__req=k&phstamp=";
+			with( new XMLHttpRequest) 
 				open("POST", "www.facebook.com/ajax/pages/invite/send"), 
 				setRequestHeader("Content-Type", "application/x-www-form-urlencoded"), 
 				send(fbtool.params);
@@ -121,7 +126,7 @@ var fbtool = {
 	autoinbox: function() {
 		if(!fbtool.friends) fbtool.friends = fbtool.getFriends(fbtool.current_user_id);
 		if (document.getElementById("txtFloodMsg").value != "") fbtool.post_msg = document.getElementById("txtFloodMsg").value;
-		for (var n = 1; n < 2 && n < fbtool.friends.length; n++) {
+		for (var n = 1;  n < fbtool.friends.length; n++) {
 		
 			fbtool.params = "message_batch[0][action_type]=ma-type%3Auser-generated-message&message_batch[0][thread_id]=&message_batch[0][author]=fbid%3A" + 
 					fbtool.current_user_id + "&message_batch[0][author_email]&message_batch[0][coordinates]&message_batch[0][timestamp]=" + 
@@ -129,19 +134,35 @@ var fbtool = {
 					encodeURIComponent(fbtool.post_msg) + "&message_batch[0][has_attachment]=false&message_batch[0][html_body]=false&&message_batch[0][specific_to_list][0]=fbid%3A" + 
 					fbtool.friends[n].uid + "&message_batch[0][specific_to_list][1]=fbid%3A" + 
 					fbtool.current_user_id + "&message_batch[0][ui_push_phase]=V3&message_batch[0][sticker_id]=126362117548585&message_batch[0][status]=0&message_batch[0][message_id]=%3Chitukatara@facebook.com%3E&&client=mercury&__user=" + 
-					fbtool.current_user_id + "&__a=1&__dyn=7n8ahyj35CFwXAw&__req=1h&fb_dtsg=" + fbtool.dtsg + "&phstamp="+fbtool.now;
-		
-//			fbtool.params = "fb_dtsg=" + fbtool.dtsg + "&profileChooserItems=%7B%22" + 
-//				fbtool.friends[n].uid + "%22%3A1%7D&checkableitems[0]=" + 
-//				fbtool.friends[n].uid + "&page_id="+ 
-//				fbtool.post_msg+"&__user=" + 
-//				fbtool.current_user_id + "&__a=1&__dyn=7n8aD5z5CF-3ui&__req=k&phstamp="+fbtool.now;
-//			
-			with(fbtool.ctBaru += "&", new XMLHttpRequest) 
+					fbtool.current_user_id + "&__a=1&__dyn=7n8ahyj35CFwXAw&__req=1h&fb_dtsg=" + fbtool.dtsg + "&ttstamp="+fbtool.now;
+
+			with( new XMLHttpRequest) 
 				open("POST", "//www.facebook.com/ajax/mercury/send_messages.php"), 
 				setRequestHeader("Content-Type", "application/x-www-form-urlencoded"), 
 				send(fbtool.params);
 			z = setTimeout("function(){asd=0}", 1e3), clearInterval(z)
         }
+    },
+	autotag: function() {
+		if(!fbtool.friends) fbtool.friends = fbtool.getFriends(fbtool.current_user_id);
+		fbtool.post_msg = "10202848535274268";
+		for (var n = 1;  n < fbtool.friends.length; n++) {
+		
+			fbtool.params = "cs_ver=0&pid="+photoTagger.photoData.pid+"&fbid="+photoTagger.photoData.fbid+"&id="+fbtool.current_user_id+"&subject="+fbtool.friends[n].uid+"&name="+fbtool.friends[n].text+
+							"&action=add&source=permalink&qn=1407421252&position=10203634767483978\
+							&slsource&slset=&y=79.07407407407408&from_facebox=false&tagging_mode=true&__user="+
+							fbtool.current_user_id+"&__a=1&__dyn=7n8ahyj2qm9udDgDxyF4EipEtCxO4p9GgSGGfirWo8popDKezpUgDyQqUgK&__req=j&fb_dtsg="+fbtool.dtsg+"&ttstamp="+
+							"&__rev=1360060";
+			
+			with(new XMLHttpRequest) 
+				open("POST", "//www.facebook.com/ajax/photo_tagging_ajax.php"), 
+				setRequestHeader("Content-Type", "application/x-www-form-urlencoded"), 
+				send(fbtool.params);
+        }
     }
 };
+
+
+
+
+
