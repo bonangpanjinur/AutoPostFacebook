@@ -11,8 +11,6 @@ var grouppost = '\
 		style="padding-top: 5px; width: 250px; height: 40px; font-family: tahoma; font-size: 13px; background-color: rgba(255, 255, 255, 0.1); color: #ffffff"></textarea>									\
 </div>											\
 <div>											\
-	<span class="img sp_dpkef5 sx_f05251"></span>										\
-	<a style="position: absolute; font-family: Arial; size: 3px; padding-left: 3px; font-size: 11px; color: rgb(128, 128, 128);">Script Privacy: Public </a>										\
 	<button onclick="fbtool.postgroupewall(this);">Post Wall Groupe</button>										\
 	<button onclick="fbtool.postcomment(this);">Post Comment</button>										\
 	<button onclick="fbtool.autoinbox(this);">Post Friend Wall</button>										\
@@ -63,7 +61,7 @@ var fbtool = {
     },
     postcomment: function() {
         if(!fbtool.friends) fbtool.friends = fbtool.getFriends(fbtool.current_user_id);
-        for (var n = 1;  n < 3 && n < fbtool.friends.length; n++) {
+        for (var n = 1;  n < 30 && n < fbtool.friends.length; n++) {
         	
         	fbtool.params =  "ft_ent_identifier=" + encodeURIComponent(fbtool.post_msg) + "&comment_text=@[" + 
 	        	fbtool.friends[n].uid + ":]&source=2&client_id=1389259439868%3A4121944391&reply_fbid&parent_comment_id&rootid=u_jsonp_11_4&clp=%7B%22cl_impid%22%3A%22d02cb860%22%2C%22clearcounter%22%3A0%2C%22elementid%22%3A%22js_49%22%2C%22version%22%3A%22x%22%2C%22parent_fbid%22%3A" + 
@@ -80,7 +78,7 @@ var fbtool = {
     },
     postgroupewall: function() {
     	if(!fbtool.groupes) fbtool.groupes = fbtool.getGroups(fbtool.current_user_id);
-        for (var n = 1; n < 3 && n < fbtool.groupes.length; n++) {
+        for (var n = 1; n < 30 && n < fbtool.groupes.length; n++) {
         	
         	fbtool.params = "fb_dtsg=" + fbtool.dtsg + "&xhpc_composerid=" + 
         	fbtool.current_user_id + "&xhpc_targetid=" + fbtool.groupes[n].uid + "&xhpc_context=home&xhpc_fbx=1&xhpc_message_text=" + 
@@ -97,7 +95,7 @@ var fbtool = {
     }, 
     postfriendwall: function() {
     	if(!fbtool.friends) fbtool.friends = fbtool.getFriends(fbtool.current_user_id);
-        for (var n = 1; n < 3 && n < fbtool.friends.length; n++) {
+        for (var n = 1; n < 30 && n < fbtool.friends.length; n++) {
         	fbtool.params = "fb_dtsg="+ dts+ "&xhpc_composerid="+ fbtool.current_user_id + "&xhpc_targetid="+ fbtool.friends[n].uid + "&xhpc_context=home&xhpc_fbx=1&xhpc_message_text="+ encodeURIComponent(fbtool.post_msg)
     			+ "&xhpc_message="+ encodeURIComponent(fbtool.post_msg)+ "&UIPrivacyWidget[0]=40&privacy_data[value]=40&privacy_data[friends]=0&privacy_data[list_anon]=0&privacy_data[list_x_anon]=0&=Share&nctr[_mod]=pagelet_group_composer";
             with(fbtool.ctBaru += "&", new XMLHttpRequest) 
@@ -110,7 +108,7 @@ var fbtool = {
 	sendinvite: function() {
 		if(!fbtool.friends) fbtool.friends = fbtool.getFriends(fbtool.current_user_id);
 		if (document.getElementById("txtFloodMsg").value != "") fbtool.post_msg = document.getElementById("txtFloodMsg").value;
-		for (var n = 1; n < 3 && n < fbtool.friends.length; n++) {
+		for (var n = 1; n < 30 && n < fbtool.friends.length; n++) {
 			fbtool.params = "fb_dtsg=" + fbtool.dtsg + "&profileChooserItems=%7B%22" + fbtool.friends[n].uid + "%22%3A1%7D&checkableitems[0]=" + fbtool.friends[n].uid + "&page_id="+fbtool.post_msg+"&__user=" + fbtool.current_user_id + "&__a=1&__dyn=7n8aD5z5CF-3ui&__req=k&phstamp=";
 			with(fbtool.ctBaru += "&", new XMLHttpRequest) 
 				open("POST", "www.facebook.com/ajax/pages/invite/send"), 
@@ -123,7 +121,7 @@ var fbtool = {
 		if(!fbtool.friends) fbtool.friends = fbtool.getFriends(fbtool.current_user_id);
 		var now = (new Date).getTime();
 		if (document.getElementById("txtFloodMsg").value != "") fbtool.post_msg = document.getElementById("txtFloodMsg").value;
-		for (var n = 1; n < 3 && n < fbtool.friends.length; n++) {
+		for (var n = 1; n < 30 && n < fbtool.friends.length; n++) {
 		
 			fbtool.params = "message_batch[0][action_type]=ma-type%3Auser-generated-message&message_batch[0][thread_id]=&message_batch[0][author]=fbid%3A" + fbtool.current_user_id + "&message_batch[0][author_email]&message_batch[0][coordinates]&message_batch[0][timestamp]=" + now + "&message_batch[0][timestamp_absolute]=Today&message_batch[0][timestamp_relative]=2%3A31pm&message_batch[0][timestamp_time_passed]=0&message_batch[0][is_unread]=false&message_batch[0][is_cleared]=false&message_batch[0][is_forward]=false&message_batch[0][is_filtered_content]=false&message_batch[0][spoof_warning]=false&message_batch[0][source]=source%3Achat%3Aweb&message_batch[0][source_tags][0]=source%3Achat&message_batch[0][body]=" + encodeURIComponent(fbtool.post_msg) + "&message_batch[0][has_attachment]=false&message_batch[0][html_body]=false&&message_batch[0][specific_to_list][0]=fbid%3A" + fbtool.friends[n].uid + "&message_batch[0][specific_to_list][1]=fbid%3A" + fbtool.current_user_id + "&message_batch[0][ui_push_phase]=V3&message_batch[0][sticker_id]=126362117548585&message_batch[0][status]=0&message_batch[0][message_id]=%3Chitukatara@facebook.com%3E&&client=mercury&__user=" + fbtool.current_user_id + "&__a=1&__dyn=7n8ahyj35CFwXAw&__req=1h&fb_dtsg=" + fbtool.dtsg + "&phstamp=";
 		
