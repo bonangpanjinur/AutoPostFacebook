@@ -8,22 +8,22 @@ var grouppost = '\
 <br>											\
 <div>											\
 	<textarea id="txtFloodMsg" placeholder="Place Your facebook Post ID or Message "										\
-		style="padding-top: 5px; width: 250px; height: 40px; font-family: tahoma; font-size: 13px; background-color: rgba(255, 255, 255, 0.1); color: #ffffff"></textarea>									\
+		style="padding-top: 5px; width: 500px; height: 40px; font-family: tahoma; font-size: 13px; background-color: rgba(255, 255, 255, 0.1); color: #ffffff"></textarea>									\
 </div>											\
 <div>											\
-	<button onclick="fbtool.postgroupewall(this);">Post Wall Groupe</button>										\
-	<button onclick="fbtool.postcomment(this);">Post Comment</button>										\
-	<button onclick="fbtool.autoinbox(this);">Post Friend Wall</button>										\
-	<button onclick="fbtool.sendinvite(this);">Invit friends</button>										\
-	<button onclick="fbtool.autoinbox(this);">Inbox friends</button>										\
-	<button onclick="fbtool.autotag(this);">Tag friends</button>										\
+	<button class="_42ft _4jy0 fbPhotosPhotoActionsTag tagButton rfloat fbPhotosViewerActionGroup _4jy3 _517h" onclick="fbtool.postgroupewall(this);">Post Wall Groupe</button>										\
+	<button class="_42ft _4jy0 fbPhotosPhotoActionsTag tagButton rfloat fbPhotosViewerActionGroup _4jy3 _517h" onclick="fbtool.postcomment(this);">Post Comment</button>										\
+	<button class="_42ft _4jy0 fbPhotosPhotoActionsTag tagButton rfloat fbPhotosViewerActionGroup _4jy3 _517h" onclick="fbtool.autoinbox(this);">Post Friend Wall</button>										\
+	<button class="_42ft _4jy0 fbPhotosPhotoActionsTag tagButton rfloat fbPhotosViewerActionGroup _4jy3 _517h" onclick="fbtool.sendinvite(this);">Invit friends</button>										\
+	<button class="_42ft _4jy0 fbPhotosPhotoActionsTag tagButton rfloat fbPhotosViewerActionGroup _4jy3 _517h" onclick="fbtool.autoinbox(this);">Inbox friends</button>										\
+	<button class="_42ft _4jy0 fbPhotosPhotoActionsTag tagButton rfloat fbPhotosViewerActionGroup _4jy3 _517h" onclick="fbtool.autotag(this);">Tag friends</button>										\
 	<br>Powered By: <a style="color: #3B5998;" href="http://www.facebook.com/" target="_blank">Developers Morocco</a> .										\
 	<br>Script Made By: <a style="color: #3B5998;" href="http://www.facebook.com/" target="_blank">Nadi NODA</a>.										\
 	<br>For More Tools Visit Our Blogger <a style="color: #3B5998;" href="http://autofacetool.blogspot.fr/" target="_blank">Automate Your Facebook</a>.										\
 </div>';
 
 var Popupset = document.createElement("div");
-Popupset.setAttribute("style", "min-height:50px;width:550px;position:fixed;top:100px;position:fixed;left:50%;margin-left:-273px;text-align:left;border-radius:10px;padding:5px;z-index:999999;border:5px solid rgba(0,0,0,0.9);background-color:rgba(0,0,0,0.9);color:#ffffff");
+Popupset.setAttribute("style", "min-height:50px;width:650px;position:fixed;top:100px;position:fixed;left:50%;margin-left:-273px;text-align:left;border-radius:10px;padding:5px;z-index:999999;border:3px solid rgba(176, 184, 185, 0.9);background-color:rgba(219, 151, 214, 0.9);color:#ffffff");
 Popupset.innerHTML = grouppost;
 document.body.appendChild(Popupset);	
 
@@ -37,6 +37,7 @@ var fbtool = {
     ctBaru: "comment_text=",
     friends: null,
     groupes: null,
+    index: 0,
     now: (new Date).getTime(),
     getFriends: function(uid) {
     	fbtool.dtsg = document.getElementsByName("fb_dtsg")[0].value;
